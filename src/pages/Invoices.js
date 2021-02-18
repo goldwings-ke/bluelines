@@ -4,7 +4,7 @@ import { FirebaseAuth } from 'react-firebaseui';
 import firebase, { auth, provider } from '../components/firebase';
 import ReactTable from "react-table"; 
 import styled from "styled-components";
-
+import SalesLedger from './SalesLedger';
 // Styled component named StyledButton
 const StyledButton = styled.button`
   background-color: black;
@@ -275,7 +275,99 @@ class Invoices extends Component {
     var d = new Date();
     var n = d.getTime();
     var mDepth = 2;
-    var customername = this.state.NAME;
+    var newRow = null;
+ 
+    var newPostKey = firebase.database().ref().child('salesdaybook').push().key;
+
+    this.state.itemsInvoice.map((mitem) =>{
+      if(mitem.id === itemId){
+        if(this.state.isExists){
+          newRow = {
+          ACCOUNT_NAME: mitem.ACCOUNT_NAME,
+          ADDRESS:  mitem.ADDRESS,
+          AMOUNT: mitem.AMOUNT,
+          COMMENT: mitem.COMMENT,
+          CUSTOMER_ORDER_DATE: mitem.CUSTOMER_ORDER_DATE,
+          DELIVERY_DATE: mitem.DELIVERY_DATE,
+          DELIVERY_NO: mitem.DELIVERY_NO,
+          DESCRIPTION: mitem.DESCRIPTION,
+          DISPATCHED_DATE: mitem.DISPATCHED_DATE,
+          DISPATCHED_THRU: mitem.DISPATCHED_THRU,
+          INVOICE_DATE: mitem.INVOICE_DATE,
+          INVOICE_DATE_TXT: mitem.INVOICE_DATE_TXT,
+          INVOICE_NO: mitem.INVOICE_NO,
+          INVOICE_TYPE: mitem.INVOICE_TYPE,
+          ITEMS: mitem.ITEMS,
+          LINE_NO: mitem.LINE_NO,
+          MEMO: mitem.MEMO,
+          MYCLASS:mitem.MYCLASS,
+          NAME: mitem.NAME,
+          PRICE: mitem.PRICE,
+          PROFORMA_DATE: mitem.PROFORMA_DATE,
+          PROFORMA_NO: mitem.PROFORMA_NO,
+          QTY: mitem.QTY,
+          TAX: mitem.TAX,
+          TAX_RATE: mitem.TAX_RATE,
+          TAX_TYPE: mitem.TAX_TYPE,
+          TOTAL: mitem.TOTAL,
+          UNITS: mitem.UNITS,
+          USER_NAME: mitem.USER_NAME,
+          debtorsledger_contra_id: mitem.debtorsledger_contra_id,
+          id: itemId,
+          invoiceNoPushId: mitem.invoiceNoPushId,
+          log: mitem.log,
+          loged_in_user_id: mitem.loged_in_user_id,
+          posting_contra_id: mitem.posting_contra_id,
+          uniqueRowId: mitem.uniqueRowId,
+          unique_id: mitem.unique_id
+          } 
+
+        } else {
+          newRow = {
+          ACCOUNT_NAME: mitem.ACCOUNT_NAME,
+          ADDRESS:  mitem.ADDRESS,
+          AMOUNT: mitem.AMOUNT,
+          COMMENT: mitem.COMMENT,
+          CUSTOMER_ORDER_DATE: mitem.CUSTOMER_ORDER_DATE,
+          DELIVERY_DATE: mitem.DELIVERY_DATE,
+          DELIVERY_NO: mitem.DELIVERY_NO,
+          DESCRIPTION: mitem.DESCRIPTION,
+          DISPATCHED_DATE: mitem.DISPATCHED_DATE,
+          DISPATCHED_THRU: mitem.DISPATCHED_THRU,
+          INVOICE_DATE: mitem.INVOICE_DATE,
+          INVOICE_DATE_TXT: mitem.INVOICE_DATE_TXT,
+          INVOICE_NO: mitem.INVOICE_NO,
+          INVOICE_TYPE: mitem.INVOICE_TYPE,
+          ITEMS: mitem.ITEMS,
+          LINE_NO: mitem.LINE_NO,
+          MEMO: mitem.MEMO,
+          MYCLASS:mitem.MYCLASS,
+          NAME: mitem.NAME,
+          PRICE: mitem.PRICE,
+          PROFORMA_DATE: mitem.PROFORMA_DATE,
+          PROFORMA_NO: mitem.PROFORMA_NO,
+          QTY: mitem.QTY,
+          TAX: mitem.TAX,
+          TAX_RATE: mitem.TAX_RATE,
+          TAX_TYPE: mitem.TAX_TYPE,
+          TOTAL: mitem.TOTAL,
+          UNITS: mitem.UNITS,
+          USER_NAME: mitem.USER_NAME,
+          debtorsledger_contra_id: mitem.debtorsledger_contra_id,
+          id: newPostKey,
+          invoiceNoPushId: mitem.invoiceNoPushId,
+          log: mitem.log,
+          loged_in_user_id: mitem.loged_in_user_id,
+          posting_contra_id: mitem.posting_contra_id,
+          uniqueRowId: mitem.uniqueRowId,
+          unique_id: mitem.unique_id
+          } 
+
+        }
+      }
+    });
+
+    var customername = newRow.NAME;
       if(customername === ''){
         alert("Please Enter Customer Name!");
         return;
@@ -287,100 +379,66 @@ class Invoices extends Component {
     for(let x of mBizInfo){
        businessKeyId = x.businessKeyId ;
     }
+ 
     var saved = "Saved!"; 
+  var txt="ACCOUNT_NAME: "+ newRow.ACCOUNT_NAME+"\n"+
+          "ADDRESS: "+newRow.ADDRESS+"\n"+
+          "AMOUNT: "+newRow.AMOUNT+"\n"+
+          "COMMENT: "+newRow.COMMENT+"\n"+
+          "CUSTOMER_ORDER_DATE: "+newRow.CUSTOMER_ORDER_DATE+"\n"+
+          "DELIVERY_DATE: "+newRow.DELIVERY_DATE+"\n"+
+          "DELIVERY_NO: "+newRow.DELIVERY_NO+"\n"+
+          "DESCRIPTION: "+newRow.DESCRIPTION+"\n"+
+          "DISPATCHED_DATE: "+newRow.DISPATCHED_DATE+"\n"+
+          "DISPATCHED_THRU: "+newRow.DISPATCHED_THRU+"\n"+
+          "INVOICE_DATE: "+newRow.INVOICE_DATE+"\n"+
+          "INVOICE_DATE_TXT: "+newRow.INVOICE_DATE_TXT+"\n"+
+          "INVOICE_NO: "+newRow.INVOICE_NO+"\n"+
+          "INVOICE_TYPE: "+newRow.INVOICE_TYPE+"\n"+
+          "ITEMS: "+newRow.ITEMS+"\n"+
+          "LINE_NO: "+newRow.LINE_NO+"\n"+
+          "MEMO: "+newRow.MEMO+"\n"+
+          "MYCLASS: "+newRow.MYCLASS+"\n"+
+          "NAME: "+newRow.NAME+"\n"+
+          "PRICE: "+newRow.PRICE+"\n"+
+          "PROFORMA_DATE: "+newRow.PROFORMA_DATE+"\n"+
+          "PROFORMA_NO: "+newRow.PROFORMA_NO+"\n"+
+          "QTY: "+newRow.QTY+"\n"+
+          "TAX: "+newRow.TAX+"\n"+
+          "TAX_RATE: "+newRow.TAX_RATE+"\n"+
+          "TAX_TYPE: "+newRow.TAX_TYPE+"\n"+
+          "TOTAL: "+newRow.TOTAL+"\n"+
+          "UNITS: "+newRow.UNITS+"\n"+
+          "USER_NAME: "+newRow.USER_NAME+"\n"+
+          "businessKeyId: "+businessKeyId+"\n"+
+          "debtorsledger_contra_id: "+newRow.debtorsledger_contra_id+"\n"+
+          "id: "+newRow.id+"\n"+
+          "invoiceNoPushId: "+newRow.invoiceNoPushId+"\n"+
+          "log: "+newRow.log+"\n"+
+          "loged_in_user_id: "+uid+"\n"+
+          "posting_contra_id: "+newRow.posting_contra_id+"\n"+
+          "uniqueRowId: "+newRow.uniqueRowId+"\n"+
+          "unique_id: "+newRow.unique_id;
+
+
+   var salesLedger = <SalesLedger newRow={newRow}/>;
+       var ab = 10;
+    if(ab < 100){
+      //alert(txt);
+      alert(salesLedger.NAME)
+      return;
+    }
     if(this.state.isExists)
     {
-      const insertRef = firebase.database().ref('salesdaybook/'+
-       uid+'/'+businessKeyId+'/'+this.state.id);
-      var saved = "Updated!";  
-      const item = {
-          ACCOUNT_NAME: this.state.ACCOUNT_NAME,
-          ADDRESS: this.state.ADDRESS,
-          AMOUNT: this.state.AMOUNT,
-          COMMENT: this.state.COMMENT,
-          CUSTOMER_ORDER_DATE: this.state.CUSTOMER_ORDER_DATE,
-          DELIVERY_DATE: this.state.DELIVERY_DATE,
-          DELIVERY_NO: this.state.DELIVERY_NO,
-          DESCRIPTION: this.state.DESCRIPTION,
-          DISPATCHED_DATE: this.state.DISPATCHED_DATE,
-          DISPATCHED_THRU: this.state.DISPATCHED_THRU,
-          INVOICE_DATE: this.state.INVOICE_DATE,
-          INVOICE_DATE_TXT: this.state.INVOICE_DATE_TXT,
-          INVOICE_NO: this.state.INVOICE_NO,
-          INVOICE_TYPE: this.state.INVOICE_TYPE,
-          ITEMS: this.state.ITEMS,
-          LINE_NO: this.state.LINE_NO,
-          MEMO: this.state.MEMO,
-          MYCLASS: this.state.MYCLASS,
-          NAME: this.state.NAME,
-          PRICE: this.state.PRICE,
-          PROFORMA_DATE: this.state.PROFORMA_DATE,
-          PROFORMA_NO: this.state.PROFORMA_NO,
-          QTY: this.state.QTY,
-          TAX: this.state.TAX,
-          TAX_RATE: this.state.TAX_RATE,
-          TAX_TYPE: this.state.TAX_TYPE,
-          TOTAL: this.state.TOTAL,
-          UNITS: this.state.UNITS,
-          USER_NAME: this.state.USER_NAME,
-          businessKeyId: businessKeyId,
-          debtorsledger_contra_id: this.state.debtorsledger_contra_id,
-          id: this.state.id,
-          invoiceNoPushId: this.state.invoiceNoPushId, 
-          log: this.state.log,
-          loged_in_user_id: uid,
-          posting_contra_id: this.state.posting_contra_id,
-          uniqueRowId: this.state.uniqueRowId,
-          unique_id: this.state.unique_id
-      }
-     insertRef.set(item);
+    var updates = {};
+    updates['/salesdaybook/' + uid +'/'+businessKeyId+ '/' + itemId] = newRow;
+    
     }
     else
     {
-      const updateRef = firebase.database().ref('salesdaybook/'+
-       uid+'/'+businessKeyId);     
-      const item = {
-          ACCOUNT_NAME: this.state.ACCOUNT_NAME,
-          ADDRESS: this.state.ADDRESS,
-          AMOUNT: this.state.AMOUNT,
-          COMMENT: this.state.COMMENT,
-          CUSTOMER_ORDER_DATE: this.state.CUSTOMER_ORDER_DATE,
-          DELIVERY_DATE: this.state.DELIVERY_DATE,
-          DELIVERY_NO: this.state.DELIVERY_NO,
-          DESCRIPTION: this.state.DESCRIPTION,
-          DISPATCHED_DATE: this.state.DISPATCHED_DATE,
-          DISPATCHED_THRU: this.state.DISPATCHED_THRU,
-          INVOICE_DATE: this.state.INVOICE_DATE,
-          INVOICE_DATE_TXT: this.state.INVOICE_DATE_TXT,
-          INVOICE_NO: this.state.INVOICE_NO,
-          INVOICE_TYPE: this.state.INVOICE_TYPE,
-          ITEMS: this.state.ITEMS,
-          LINE_NO: this.state.LINE_NO,
-          MEMO: this.state.MEMO,
-          MYCLASS: this.state.MYCLASS,
-          NAME: this.state.NAME,
-          PRICE: this.state.PRICE,
-          PROFORMA_DATE: this.state.PROFORMA_DATE,
-          PROFORMA_NO: this.state.PROFORMA_NO,
-          QTY: this.state.QTY,
-          TAX: this.state.TAX,
-          TAX_RATE: this.state.TAX_RATE,
-          TAX_TYPE: this.state.TAX_TYPE,
-          TOTAL: this.state.TOTAL,
-          UNITS: this.state.UNITS,
-          USER_NAME: this.state.USER_NAME,
-          businessKeyId: businessKeyId,
-          debtorsledger_contra_id: this.state.debtorsledger_contra_id,
-          id: this.state.id,
-          invoiceNoPushId: this.state.invoiceNoPushId, 
-          log: this.state.log,
-          loged_in_user_id: uid,
-          posting_contra_id: this.state.posting_contra_id,
-          uniqueRowId: this.state.uniqueRowId,
-          unique_id: this.state.unique_id
-      }
-     insertRef.push(item);
-     
+            // Get a key for a new Post.
+    var updates = {};
+    updates['/salesdaybook/' + uid +'/'+businessKeyId+ '/' + newPostKey] = newRow;     
     }
     alert(saved)
 
@@ -1031,7 +1089,7 @@ initialize(){
             var listItems =this.state.itemsInvoice.map((item,index) => 
                 <tr  >
                 <td style={{width: lenStr[0]}}><span name="LINE_NO"  >{item.LINE_NO}</span></td>
-              <select id={item.id} name="ITEMS" onChange={this.handleChange}>
+              <td><select id={item.id} name="ITEMS" onChange={this.handleChange}>
                 {myData.map((myitem,myindex) => {
                 var rfbDepth = myitem.depth;
                 var rfbItemName = myitem.itemName;
@@ -1048,7 +1106,7 @@ initialize(){
                       <option value ={myTxt}>{myTxt}</option>
                     );
                 })}
-              </select>                
+              </select></td>                
                 <td style={{width: lenStr[2]}}><input type="number" name="QTY" id={item.id} onChange={this.handleChange}value={item.QTY} /></td>
                 <td style={{width: lenStr[3]}}><input type="number" name="PRICE" id={item.id} onChange={this.handleChange} value={item.PRICE} /></td>
                 <td style={{width: lenStr[4]}}><p> {item.AMOUNT} </p></td>
